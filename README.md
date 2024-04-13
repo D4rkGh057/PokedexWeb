@@ -1,8 +1,36 @@
-# React + Vite
+# PokedexWeb
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una aplicación web de Pokedex creada con React y Vite.
 
-Currently, two official plugins are available:
+## Instalación
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para instalar las dependencias del proyecto, ejecuta el siguiente comando:
+
+```sh
+npm install
+```
+
+## Uso
+Para iniciar el servidor de desarrollo, ejecuta:
+```sh
+npm run dev
+```
+Para construir la aplicación para producción, ejecuta:
+```sh
+npm run build
+```
+Para previsualizar la aplicación de producción, ejecuta:
+```sh
+npm run preview
+```
+Linting
+Para ejecutar ESLint en el código del proyecto, ejecuta:
+```sh
+npm run lint
+```
+## Contribución
+Las contribuciones son bienvenidas. Por favor, abre un issue o pull request para cualquier cambio o mejora que desees realizar.
+
+## Licencia
+Este proyecto está licenciado bajo los términos de la licencia MIT.
+
