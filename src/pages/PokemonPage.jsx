@@ -5,8 +5,7 @@ import { PokemonContext } from "../context/PokemonContext";
 import { primerMayuscula } from "../helper/helper";
 
 export const PokemonPage = () => {
-  const { getPokemonByID } = useContext(PokemonContext);
-  const { getPKMLocationByID } = useContext(PokemonContext);
+  const { getPokemonByID, getPKMLocationByID } = useContext(PokemonContext);
 
   const [loading, setLoading] = useState(true);
   const [pokemon, setPokemon] = useState({});
@@ -37,6 +36,14 @@ export const PokemonPage = () => {
     fetchPokemon(id);
     fetchLocation(id);
   }, []);
+
+  if (loading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", margin: "28%" }}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <main className="container main-pokemon">
