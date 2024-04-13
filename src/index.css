@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #ecdada;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+header {
+  display: flex;
+  margin: 0;
+  padding: 5px 0;
+  background-color: #bb140b;
+  justify-content: center;
+  align-items: center;
+  max-height: 40px;
+}
+
+header span,
+span {
+  color: #181818;
+  font-size: 17px;
+  font-weight: 600;
+}
+header h1 {
+  color: white;
+  font-weight: 700;
+}
+
+header .span {
+  font-size: 2em;
+}
+header h1 a {
+  text-decoration: none;
+  color: white;
+  
+}
+.login {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  margin: 0 10px;
+}
+header h1:hover,
+header h1 a:hover {
+  opacity: 85%;
+  cursor: pointer;
+  color: white;
+}
+
+.pokedex {
+  margin-right: auto;
+}
+.pokedex img{  
+  width: 85px;
+}
+
+h1 {
+  font-family: "Press Start 2P", cursive;
+  font-size: 17px;
+  margin-bottom: 16px;
+}
+
+input {
+  padding: 6px;
+  border-radius: 16px;
+  max-width: 155px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 6px 16px;
+  background-color: #bb140b;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+  border-radius: 16px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 16px;
+}

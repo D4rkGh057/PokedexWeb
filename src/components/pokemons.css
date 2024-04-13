@@ -1,0 +1,507 @@
+:root {
+  --color-fire: #ff7402;
+  --color-grass: #9bcc50;
+  --color-steel: #9eb7b8;
+  --color-water: #4592c4;
+  --color-psychic: #f366b9;
+  --color-ground: #ab9842;
+  --color-ice: #51c4e7;
+  --color-flying: #3dc7ef;
+  --color-ghost: #4d5b64;
+  --color-normal: #a4acaf;
+  --color-poison: #7e0058;
+  --color-rock: #a38c21;
+  --color-fighting: #d56723;
+  --color-dark: #707070;
+  --color-bug: #729f3f;
+  --color-dragon: linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);
+  --color-electric: #bba909;
+  --color-fairy: #fdb9e9;
+  --color-shadow: #7b62a3;
+  --color-unknow: #757575;
+
+  --color-primary: #006d77;
+  --color-primary-hover: #181818bf;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat";
+}
+/* Globales */
+.container {
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-content: center;
+
+  padding: 40px 0;
+  flex-wrap: wrap;
+}
+
+.logo img {
+  width: 150px;
+}
+
+header form {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+  border-radius: 25px;
+}
+
+.form-group input {
+  /* padding: 15px 30px; */
+  font-family: inherit;
+  border: none;
+  outline: none;
+  font-size: 12px;
+}
+
+.icon-search {
+  width: 20px;
+  height: 20px;
+  stroke: #555;
+}
+
+.btn-search {
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  font-family: inherit;
+  color: #bb140b;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.btn-search:hover {
+  background-color: var(--color-primary-hover);
+  color: #000;
+}
+
+/* Btn Filter */
+.container-filter {
+  display: flex;
+}
+
+.icon-filter {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.icon-filter .icon {
+  width: 30px;
+  height: 30px;
+  stroke: #555;
+}
+
+/* Card List Pokemon */
+.card-list-pokemon {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5%;
+  padding-bottom: 2%;
+  justify-content: space-around;
+}
+
+.card-pokemon {
+  cursor: pointer;
+  text-decoration: none;
+  width: 150px;
+  margin: 1.5vh;
+}
+
+.card-img {
+  background-color: #f2f2f2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  height: 150px;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.card-info {
+  padding: 5px 10px 10px;
+}
+
+.card-info h3 {
+  color: #333;
+  text-align: center;
+}
+
+.pokemon-id {
+  display: block;
+  color: #888;
+}
+
+.card-types {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  flex-direction: column;
+}
+
+.card-types span {
+  display: flex;
+  font-size: 12px;
+  padding: 5px 20px;
+  border-radius: 5px;
+  color: #fff;
+  justify-content: center;
+}
+
+/* Types of Pokemon */
+.water {
+  background-color: var(--color-water);
+}
+
+.grass {
+  background-color: var(--color-grass);
+}
+
+.poison {
+  background-color: var(--color-poison);
+}
+
+.fire {
+  background-color: var(--color-fire);
+}
+
+.bug {
+  background-color: var(--color-bug);
+}
+
+.dragon {
+  background: var(--color-dragon);
+}
+
+.flying {
+  background-color: var(--color-flying);
+}
+
+.ground {
+  background-color: var(--color-ground);
+}
+
+.steel {
+  background-color: var(--color-steel);
+}
+
+.psychic {
+  background-color: var(--color-psychic);
+}
+
+.ice {
+  background-color: var(--color-ice);
+}
+
+.ghost {
+  background-color: var(--color-ghost);
+}
+
+.normal {
+  background-color: var(--color-normal);
+}
+
+.rock {
+  background-color: var(--color-rock);
+}
+
+.electric {
+  background-color: var(--color-electric);
+}
+
+.fighting {
+  background-color: var(--color-fighting);
+}
+
+.fairy {
+  background-color: var(--color-fairy);
+}
+
+.dark {
+  background-color: var(--color-dark);
+}
+
+/* Container Filters */
+.container-filters {
+  display: flex;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 250px;
+
+  color: #555;
+  background-color: #f2f2f2;
+  height: 100%;
+  padding-top: 140px;
+  transition: all 0.3s linear;
+}
+
+.container-filters.active {
+  left: 0;
+}
+
+.filter-by-type {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.filter-by-type span {
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.group-type {
+  display: flex;
+  gap: 10px;
+
+  margin-left: 15px;
+}
+
+.group-type label {
+  cursor: pointer;
+}
+
+/* 
+======================================= 
+Styles of Pokemon Single Page
+======================================= 
+*/
+
+.main-pokemon {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.header-main-pokemon {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.number-pokemon {
+  font-size: 10vh;
+  font-weight: 700;
+  color: var(--color-primary-hover);
+}
+
+.container-img-pokemon {
+  order: 2;
+    flex: 1;
+    padding: 25px;
+    height: 250px;
+    width: 250px;
+    max-width: 250px;
+}
+
+.container-img-pokemon img {
+  height: 100%;
+  width: 100%;
+}
+
+.container-info-pokemon {
+  display: flex;
+  flex-direction: column;
+  order: 1;
+  flex: 1;
+}
+
+.container-info-pokemon h1 {
+  text-align: center;
+  font-size: 4vh;
+}
+
+.info-pokemon {
+  display: flex;
+  justify-content: space-evenly;
+
+  margin-top: 20px;
+}
+
+.group-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.group-info p {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+/* Stats */
+.container-stats {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  flex: 1;
+}
+
+.stat-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.stat-group span {
+  flex-shrink: 0; /* Evita que los spans se contraigan más allá de su contenido */
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.progress-bar {
+  height: 30px;
+  background-color: var(--color-primary);
+  border-radius: 10px;
+}
+
+/*Locations*/
+.container-location {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.location {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.location th, .location td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.location th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+}
+.location td{
+  text-align: center;
+}
+
+.location-group {
+  background-color: #f2f2f2;
+}
+
+.location-group:hover {
+  background-color: #ddd;
+}
+
+/* Habilities */
+.container-habilities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+.container-habilities h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+.card-habilities {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ability {
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+}
+/* Search Page */
+
+.p-search {
+  margin-bottom: 30px;
+  font-size: 22px;
+}
+
+.p-search span {
+  font-weight: 700;
+}
+
+/* Loader */
+
+.container-loader {
+  display: flex;
+  justify-content: center;
+  margin: 200px 0;
+}
+
+/* Btn Load More */
+
+.container-btn-load-more {
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.btn-load-more {
+  border: none;
+  padding: 15px 40px;
+  font-family: inherit;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-load-more:hover {
+  background-color: var(--color-primary-hover);
+  color: #000;
+}
