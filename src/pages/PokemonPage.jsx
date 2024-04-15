@@ -2,14 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "../components";
 import { PokemonContext } from "../context/PokemonContext";
-import { primerMayuscula } from "../helper/helper";
 
 export const PokemonPage = () => {
   const { getPokemonByID, getPKMLocationByID } = useContext(PokemonContext);
 
   const [loading, setLoading] = useState(true);
   const [pokemon, setPokemon] = useState({});
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState([]);
 
   const { id } = useParams();
 
@@ -61,7 +60,7 @@ export const PokemonPage = () => {
             </div>
 
             <div className="container-info-pokemon">
-              <h1>{primerMayuscula(pokemon.name)}</h1>
+              <h1>{formatString(pokemon.name)}</h1>
               <div className="card-types info-pokemon-type">
                 {pokemon.types.map((type) => (
                   <span key={type.type.name} className={`${type.type.name}`}>

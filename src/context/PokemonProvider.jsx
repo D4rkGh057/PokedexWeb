@@ -41,8 +41,8 @@ export const PokemonProvider = ({ children }) => {
   const getGlobalPokemons = async () => {
     setSearchLoading(true)
     const baseURL = "https://pokeapi.co/api/v2/";
-    const limit = 100;
-    const maxPokemons = 20000;
+    const limit = 1000;
+    const maxPokemons = 100000;
 
     for (let offset = 0; offset < maxPokemons; offset += limit) {
       const res = await fetch(
@@ -64,6 +64,7 @@ export const PokemonProvider = ({ children }) => {
         );
         return [...prevPokemons, ...newPokemons];
       });
+      
     }
 
     setSearchLoading(false);

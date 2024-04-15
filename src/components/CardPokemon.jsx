@@ -2,6 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const CardPokemon = ({ pokemon }) => {
+  function formatString(str) {
+    return str
+      .replace(/-/g, " ")
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
   return (
     <Link to={`/pokemon/${pokemon.id}`} className="card-pokemon">
       <div className="card-img">
@@ -18,11 +26,11 @@ export const CardPokemon = ({ pokemon }) => {
       </div>
       <div className="card-info">
         <span className="pokemon-id">N° {pokemon.id}</span>
-        <h3>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
+        <h3>{formatString(pokemon.name)}</h3>
         <div className="card-types">
           {pokemon.types.map((type) => (
             <span key={type.type.name} className={type.type.name}>
-              {type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
+              {formatString(type.type.name)}
             </span>
           ))}
         </div>

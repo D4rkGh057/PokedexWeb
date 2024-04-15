@@ -12,7 +12,7 @@ export const SearchPage = () => {
     pokemon.name.includes(location.state.toLowerCase())
   );
 
-  if (searchLoading) {
+  if (filteredPokemons==undefined) {
     return (
       <div style={{ display: "flex", justifyContent: "center", margin: "28%" }}>
         <Loader />
