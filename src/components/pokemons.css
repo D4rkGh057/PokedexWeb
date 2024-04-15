@@ -94,8 +94,8 @@ header form {
   margin: 0;
 }
 
-.btn-search:hover {
-  background-color: var(--color-primary-hover);
+.btn-search:hover { 
+  transform: scale(1.1);
   color: #000;
 }
 
@@ -502,6 +502,5 @@ Styles of Pokemon Single Page
 }
 
 .btn-load-more:hover {
-  background-color: var(--color-primary-hover);
-  color: #000;
+  transform: scale(1.1);
 }

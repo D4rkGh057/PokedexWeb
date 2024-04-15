@@ -50,7 +50,7 @@
 }
 
 button:hover {
-    background-color: #181818;
+    transform: scale(1.1);
 }
 
 .register {

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { PokemonContext } from "../context/PokemonContext";
 import { SearchLoader } from "./SearchLoader";
+import { Sidebar } from "./Sidebar";
 
 export const Navigation = () => {
   const {
@@ -27,6 +28,7 @@ export const Navigation = () => {
   return (
     <div>
       <header>
+        <Sidebar />
         <Link to="/" className="pokedex">
           <img
             src="https://archives.bulbagarden.net/media/upload/4/4b/Pok%C3%A9dex_logo.png"
