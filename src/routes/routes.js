@@ -53,10 +53,10 @@ app.post("/login", (req, res) => {
         if (hashedPassword === user.password) {
           res.json({ message: "Login successful" });
         } else {
-          res.json({ message: "Incorrect password" });
+          res.status(401).json({ message: "Incorrect password" });
         }
       } else {
-        res.json({ message: "User not found" });
+        res.status(401).json({ message: "User not found" });
       }
     }
   );

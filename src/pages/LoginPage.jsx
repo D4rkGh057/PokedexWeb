@@ -1,8 +1,8 @@
 // Frontend - LoginPage component
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
-import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -27,10 +27,19 @@ export const LoginPage = () => {
 
       if (response.ok) {
         // Login successful, you can redirect the user or perform other actions
-        alert(data.message);
+        Swal.fire({
+          title: data.message,
+          text: "Welcome!",
+          icon: "success"
+        });
         navigate("/user", { state: username });
       } else {
-        setErrorMessage(data.message);
+        // Login failed, show an error message
+        Swal.fire({
+          title: "Error!",
+          text: data.message,
+          icon: "error"
+        });
       }
     } catch (error) {
       console.error("Error:", error);
@@ -66,8 +75,6 @@ export const LoginPage = () => {
         <p className="register">
           Don't have an account? <Link to={`/register`}>Register</Link>
         </p>
-
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
     </div>
   );
