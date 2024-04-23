@@ -42,7 +42,7 @@ export const PokemonProvider = ({ children }) => {
     setSearchLoading(true)
     const baseURL = "https://pokeapi.co/api/v2/";
     const limit = 1000;
-    const maxPokemons = 100000;
+    const maxPokemons = 15000;
 
     for (let offset = 0; offset < maxPokemons; offset += limit) {
       const res = await fetch(
