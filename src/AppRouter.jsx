@@ -1,7 +1,19 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
-import { SearchPage, HomePage, PokemonPage, LoginPage,RegisterPage, UserPage } from "./pages";
+import {
+  SearchPage,
+  HomePage,
+  PokemonPage,
+  LoginPage,
+  RegisterPage,
+  UserPage,
+  BerriesPage,
+  ItemsPage,
+} from "./pages";
+import { BerriesProvider } from "./context/BerriesProvider";
 import { ScrollToTop } from "./components/TopScroll";
+import { ItemsProvider } from "./context/ItemsProvider";
+import { PokemonProvider } from "./context/PokemonProvider";
 
 export const AppRouter = () => {
   return (
@@ -15,6 +27,22 @@ export const AppRouter = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="user" element={<UserPage />} />
+          <Route
+            path="berries"
+            element={
+              <BerriesProvider>
+                <BerriesPage />
+              </BerriesProvider>
+            }
+          />
+          <Route
+            path="items"
+            element={
+              <ItemsProvider>
+                <ItemsPage />
+              </ItemsProvider>
+            }
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>

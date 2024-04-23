@@ -7,7 +7,11 @@ export const BerriesProvider = ({ children }) => {
   const [offset, setOffset] = useState(0);
   const [searchLoading, setSearchLoading] = useState(false);
 
-  const getAllBerries = async (limit = 30) => {
+  const onClickLoadMore = () => {
+    setOffset(offset + 35);
+  };
+
+  const getAllBerries = async (limit = 35) => {
     const baseURL = "https://pokeapi.co/api/v2/";
 
     const res = await fetch(`${baseURL}berry?limit=${limit}&offset=${offset}`);
@@ -19,8 +23,10 @@ export const BerriesProvider = ({ children }) => {
       return data;
     });
     const results = await Promise.all(promises);
-
-    setAllBerries([...allBerries, ...results]);
+    const newBerries = results.filter(
+      (resultBerry) => !allBerries.some((berry) => berry.id === resultBerry.id)
+    );
+    setAllBerries([...allBerries, ...newBerries]);
   };
 
   const getGlobalBerries = async (limit = 64) => {
@@ -41,9 +47,8 @@ export const BerriesProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getAllBerries();    
-  }
-    , []);
+    getAllBerries();
+  }, [offset]);
 
   return (
     <BerriesContext.Provider
@@ -53,6 +58,7 @@ export const BerriesProvider = ({ children }) => {
         getAllBerries,
         getGlobalBerries,
         searchLoading,
+        onClickLoadMore,
       }}
     >
       {children}

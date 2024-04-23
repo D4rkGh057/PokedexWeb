@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemsContext } from "./ItemsContext";
 
 export const ItemsProvider = ({ children }) => {
@@ -6,6 +6,10 @@ export const ItemsProvider = ({ children }) => {
   const [globalItems, setGlobalItems] = useState([]);
   const [offset, setOffset] = useState(0);
   const [searchLoading, setSearchLoading] = useState(false);
+
+  const onClickLoadMore = () => {
+    setOffset(offset + 30);
+  };
 
   const getAllItems = async (limit = 30) => {
     const baseURL = "https://pokeapi.co/api/v2/";
@@ -19,8 +23,10 @@ export const ItemsProvider = ({ children }) => {
       return data;
     });
     const results = await Promise.all(promises);
-
-    setAllItems([...allItems, ...results]);
+    const newItems = results.filter(
+      (resultItem) => !allItems.some((item) => item.id === resultItem.id)
+    );
+    setAllItems([...allItems, ...newItems]);
   };
 
   const getGlobalItems = async (limit = 64) => {
@@ -40,6 +46,10 @@ export const ItemsProvider = ({ children }) => {
     setSearchLoading(false);
   };
 
+  useEffect(() => {
+    getAllItems();
+  }, [offset]);
+
   return (
     <ItemsContext.Provider
       value={{
@@ -48,6 +58,7 @@ export const ItemsProvider = ({ children }) => {
         getAllItems,
         getGlobalItems,
         searchLoading,
+        onClickLoadMore,
       }}
     >
       {children}
