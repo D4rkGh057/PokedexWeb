@@ -29,7 +29,7 @@ export const HomePage = () => {
       {/* <FilterBar /> */}
       <div className="container-btn-load-more container">
         <button className="btn-load-more" onClick={onClickLoadMore}>
-          Cargar más
+          Load More
         </button>
       </div>
     </>
