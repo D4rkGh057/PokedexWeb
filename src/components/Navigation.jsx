@@ -5,6 +5,7 @@ import { SearchLoader } from "./SearchLoader";
 import { Sidebar } from "./Sidebar";
 
 export const Navigation = () => {
+  const username = localStorage.getItem("username");
   const {
     onInputChange,
     valueSearch,
@@ -48,9 +49,7 @@ export const Navigation = () => {
             <button className="btn-search">Buscar</button>
           </form>
         </div>
-        <Link to={`/login`} className="login">
-          Login
-        </Link>
+        {!username && <Link to="/login" className="login">Login</Link>}
       </header>
       <Outlet />
     </div>

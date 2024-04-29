@@ -4,8 +4,7 @@ import Swal from "sweetalert2";
 import "./User.css";
 
 export const UserPage = () => {
-  const location = useLocation();
-  const username = location.state;
+  const username = localStorage.getItem('username');
   const navigate = useNavigate();
 
   const [teams, setTeams] = useState([]);

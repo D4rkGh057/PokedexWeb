@@ -32,7 +32,8 @@ export const LoginPage = () => {
           text: "Welcome!",
           icon: "success"
         });
-        navigate("/user", { state: username });
+        localStorage.setItem('username', username);
+        navigate("/user");
       } else {
         // Login failed, show an error message
         Swal.fire({

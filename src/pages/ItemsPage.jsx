@@ -4,7 +4,8 @@ import "./Items.css";
 import { Link } from "react-router-dom";
 
 export const ItemsPage = () => {
-  const { allItems, getAllItems, searchLoading,onClickLoadMore } = useContext(ItemsContext);
+  const { allItems, getAllItems, searchLoading, onClickLoadMore } =
+    useContext(ItemsContext);
 
   function formatString(str) {
     return str
@@ -28,13 +29,13 @@ export const ItemsPage = () => {
         <p>Loading...</p>
       ) : (
         allItems.map((item) => (
-            <Link to={`/item/${item.id}`} className="link-card">
-          <div key={item.id} className="item-card">
-            <h2>{formatString(item.name)}</h2>
-            <img src={item.sprites.default} alt={item.name} />
-            <p>{getEnglishFlavorText(item)}</p>
-          </div>
-              </Link>
+          <Link to={`/item/${item.id}`} className="link-card">
+            <div key={`I${item.id}`} className="item-card">
+              <h2>{formatString(item.name)}</h2>
+              <img src={item.sprites.default} alt={item.name} />
+              <p>{getEnglishFlavorText(item)}</p>
+            </div>
+          </Link>
         ))
       )}
       <div className="container-btn-load-more container">
