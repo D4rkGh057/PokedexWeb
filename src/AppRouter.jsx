@@ -9,11 +9,12 @@ import {
   UserPage,
   BerriesPage,
   ItemsPage,
+  BerriePage,
+  ItemPage,
 } from "./pages";
 import { BerriesProvider } from "./context/BerriesProvider";
 import { ScrollToTop } from "./components/TopScroll";
 import { ItemsProvider } from "./context/ItemsProvider";
-import { PokemonProvider } from "./context/PokemonProvider";
 
 export const AppRouter = () => {
   return (
@@ -36,10 +37,26 @@ export const AppRouter = () => {
             }
           />
           <Route
+            path="berry/:id"
+            element={
+              <BerriesProvider>
+                <BerriePage />
+              </BerriesProvider>
+            }
+          />
+          <Route
             path="items"
             element={
               <ItemsProvider>
                 <ItemsPage />
+              </ItemsProvider>
+            }
+          />
+          <Route
+            path="item/:id"
+            element={
+              <ItemsProvider>
+                <ItemPage />
               </ItemsProvider>
             }
           />

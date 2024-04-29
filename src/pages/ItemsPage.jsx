@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { ItemsContext } from "../context/ItemsContext";
 import "./Items.css";
+import { Link } from "react-router-dom";
 
 export const ItemsPage = () => {
   const { allItems, getAllItems, searchLoading,onClickLoadMore } = useContext(ItemsContext);
@@ -27,16 +28,18 @@ export const ItemsPage = () => {
         <p>Loading...</p>
       ) : (
         allItems.map((item) => (
+            <Link to={`/item/${item.id}`} className="link-card">
           <div key={item.id} className="item-card">
             <h2>{formatString(item.name)}</h2>
             <img src={item.sprites.default} alt={item.name} />
             <p>{getEnglishFlavorText(item)}</p>
           </div>
+              </Link>
         ))
       )}
       <div className="container-btn-load-more container">
         <button className="btn-load-more" onClick={onClickLoadMore}>
-          Cargar más
+          Load More
         </button>
       </div>
     </div>

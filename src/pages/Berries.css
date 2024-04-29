@@ -1,25 +1,223 @@
-.berries-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    margin: 30px;
+:root {
+  --color-fire: #ff7402;
+  --color-grass: #9bcc50;
+  --color-steel: #9eb7b8;
+  --color-water: #4592c4;
+  --color-psychic: #f366b9;
+  --color-ground: #ab9842;
+  --color-ice: #51c4e7;
+  --color-flying: #3dc7ef;
+  --color-ghost: #4d5b64;
+  --color-normal: #a4acaf;
+  --color-poison: #7e0058;
+  --color-rock: #a38c21;
+  --color-fighting: #d56723;
+  --color-dark: #707070;
+  --color-bug: #729f3f;
+  --color-dragon: linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);
+  --color-electric: #bba909;
+  --color-fairy: #fdb9e9;
+  --color-shadow: #7b62a3;
+  --color-unknow: #757575;
+  --color-primary: #006d77;
+  --color-primary-hover: #181818bf;
 }
 
-.section-title{
-
-    text-align: center;
-    width: 100%;
+.water {
+  background-color: var(--color-water);
 }
 
-.berrie-card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f8f8f8;
-    border-radius: 15px;
-    padding: 20px;
-    min-width: 150px;
-    min-height: 150px;
+.grass {
+  background-color: var(--color-grass);
+}
+
+.poison {
+  background-color: var(--color-poison);
+}
+
+.fire {
+  background-color: var(--color-fire);
+}
+
+.bug {
+  background-color: var(--color-bug);
+}
+
+.dragon {
+  background: var(--color-dragon);
+}
+
+.flying {
+  background-color: var(--color-flying);
+}
+
+.ground {
+  background-color: var(--color-ground);
+}
+
+.steel {
+  background-color: var(--color-steel);
+}
+
+.psychic {
+  background-color: var(--color-psychic);
+}
+
+.ice {
+  background-color: var(--color-ice);
+}
+
+.ghost {
+  background-color: var(--color-ghost);
+}
+
+.normal {
+  background-color: var(--color-normal);
+}
+
+.rock {
+  background-color: var(--color-rock);
+}
+
+.electric {
+  background-color: var(--color-electric);
+}
+
+.fighting {
+  background-color: var(--color-fighting);
+}
+
+.fairy {
+  background-color: var(--color-fairy);
+}
+
+.dark {
+  background-color: var(--color-dark);
+}
+
+.spicy {
+  background-color: #ff7402;
+}
+
+.sweet {
+  background-color: #fdb9e9;
+}
+
+.dry {
+  background-color: #9bcc50;
+}
+
+.bitter {
+  background-color: #7e0058;
+}
+
+.sour {
+  background-color: #4592c4;
+}
+
+.berries-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  margin: 30px;
+
+  gap: 30px;
+}
+
+.section-title {
+  width: 100%;
+
+  text-align: center;
+}
+
+.berrie-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  min-width: 150px;
+  min-height: 150px;
+  padding: 20px;
+
+  border-radius: 15px;
+  background-color: #f8f8f8;
+}
+
+.card-types span {
+  font-size: 12px;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 5px 20px;
+
+  color: #fff;
+  border-radius: 5px;
+}
+
+.flavors {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  max-width: 160px;
+  margin-top: 10px;
+
+  gap: 5px;
+}
+
+.flavors span {
+  font-size: 12px;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 5px 20px;
+
+  color: #fff;
+  border-radius: 5px;
+}
+
+.main-berrie {
+  display: flex;
+  flex-direction: column;
+
+  margin: 20px;
+}
+
+.header-main-berrie {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 30px;
+}
+
+.berry-cicles {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  padding: 20px;
+
+  gap: 40px;
+}
+
+.cicle {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  margin: 20px;
+
+  gap: 10px;
+}
+
+.cicle img{
+  max-width: 120px;
 }

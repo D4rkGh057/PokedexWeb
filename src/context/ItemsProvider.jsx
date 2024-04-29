@@ -46,6 +46,14 @@ export const ItemsProvider = ({ children }) => {
     setSearchLoading(false);
   };
 
+  const getItemsByID = async (id) => {
+    const baseURL = "https://pokeapi.co/api/v2/";
+
+    const res = await fetch(`${baseURL}item/${id}`);
+    const data = await res.json();
+    return data;
+  };
+
   useEffect(() => {
     getAllItems();
   }, [offset]);
@@ -57,6 +65,7 @@ export const ItemsProvider = ({ children }) => {
         globalItems,
         getAllItems,
         getGlobalItems,
+        getItemsByID,
         searchLoading,
         onClickLoadMore,
       }}

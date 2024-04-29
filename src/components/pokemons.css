@@ -356,6 +356,8 @@ Styles of Pokemon Single Page
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: center;
+  text-align: center;
 }
 
 .group-info p {
@@ -519,4 +521,11 @@ Styles of Pokemon Single Page
 
 .btn-load-more:hover {
   transform: scale(1.1);
+}
+
+.link-card {
+  cursor: pointer;
+  text-decoration: none;
+  margin: 1.5vh;
+  color: #181818; 
 }

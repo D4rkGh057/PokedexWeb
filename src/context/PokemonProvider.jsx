@@ -91,7 +91,7 @@ export const PokemonProvider = ({ children }) => {
     getAllPokemons();
   }, [offset]);
 
-  // BTN CARGAR MÁS
+  // BTN Load More
   const onClickLoadMore = () => {
     setOffset(offset + 40);
   };

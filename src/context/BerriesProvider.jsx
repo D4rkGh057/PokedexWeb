@@ -46,6 +46,14 @@ export const BerriesProvider = ({ children }) => {
     setSearchLoading(false);
   };
 
+  const getBerriesByID = async (id) => {
+    const baseURL = "https://pokeapi.co/api/v2/";
+
+    const res = await fetch(`${baseURL}berry/${id}`);
+    const data = await res.json();
+    return data;
+  };
+
   useEffect(() => {
     getAllBerries();
   }, [offset]);
@@ -57,6 +65,7 @@ export const BerriesProvider = ({ children }) => {
         globalBerries,
         getAllBerries,
         getGlobalBerries,
+        getBerriesByID,
         searchLoading,
         onClickLoadMore,
       }}
