@@ -2,13 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "../components";
 import { PokemonContext } from "../context/PokemonContext";
+import "./PokemonPage.css";
 
 export const PokemonPage = () => {
-  const { getPokemonByID, getPKMLocationByID } = useContext(PokemonContext);
+  const {
+    getPokemonByID,
+    getPKMLocationByID,
+    getEvoChainByID,
+    getSpeciesByID,
+  } = useContext(PokemonContext);
 
   const [loading, setLoading] = useState(true);
   const [pokemon, setPokemon] = useState({});
   const [location, setLocation] = useState([]);
+  const [evoChain, setEvoChain] = useState([]);
+  const [species, setSpecies] = useState([]);
 
   const { id } = useParams();
 
@@ -23,6 +31,16 @@ export const PokemonPage = () => {
     setLocation(data);
   };
 
+  const fetchEvoChain = async (id) => {
+    const data = await getEvoChainByID(id);
+    setEvoChain(data);
+  };
+
+  const fetchSpecies = async (id) => {
+    const data = await getSpeciesByID(id);
+    setSpecies(data);
+  };
+
   function formatString(str) {
     return str
       .replace(/-/g, " ")
@@ -31,9 +49,13 @@ export const PokemonPage = () => {
       .join(" ");
   }
 
+  console.log(species);
+
   useEffect(() => {
     fetchPokemon(id);
     fetchLocation(id);
+    fetchEvoChain(id);
+    fetchSpecies(id);
   }, []);
 
   if (loading) {
@@ -143,6 +165,24 @@ export const PokemonPage = () => {
                 </table>
               </div>
             </div>
+          </div>
+          <div className="container-evo">
+            <h1 className="titles">Evo Chain</h1>
+            {evoChain.chain &&
+              evoChain.chain.evolves_to.map((evolution) => (
+                <div key={evolution.species.name}>
+                  <div className="evo-pokemon">
+                    <h2>Next Evolution</h2>
+                    <h3>{formatString(evolution.species.name)}</h3>
+                    <img
+                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+                        evolution.species.url.split("/")[6]
+                      }.png`}
+                      alt={formatString(evolution.species.name)}
+                    />
+                  </div>
+                </div>
+              ))}
           </div>
         </>
       )}

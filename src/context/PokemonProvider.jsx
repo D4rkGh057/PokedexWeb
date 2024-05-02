@@ -39,7 +39,7 @@ export const PokemonProvider = ({ children }) => {
 
   // Llamar todos los pokemones
   const getGlobalPokemons = async () => {
-    setSearchLoading(true)
+    setSearchLoading(true);
     const baseURL = "https://pokeapi.co/api/v2/";
     const limit = 1000;
     const maxPokemons = 15000;
@@ -64,7 +64,6 @@ export const PokemonProvider = ({ children }) => {
         );
         return [...prevPokemons, ...newPokemons];
       });
-      
     }
 
     setSearchLoading(false);
@@ -85,6 +84,27 @@ export const PokemonProvider = ({ children }) => {
     const res = await fetch(`${baseURL}pokemon/${id}/encounters`);
     const data = await res.json();
     return data;
+  };
+
+  const getSpeciesByID = async (id) => {
+    const baseURL = "https://pokeapi.co/api/v2/";
+    const res = await fetch(`${baseURL}pokemon-species/${id}`);
+    const data = await res.json();
+    return data;
+  };
+
+  const getEvoChainByID = async (id) => {
+    try {
+      const specie = await getSpeciesByID(id);
+      const evoChainURL = specie.evolution_chain.url;
+
+      const res = await fetch(evoChainURL);
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching evolution chain:", error);
+      return null;
+    }
   };
 
   useEffect(() => {
@@ -152,6 +172,8 @@ export const PokemonProvider = ({ children }) => {
         globalPokemons,
         getPokemonByID,
         getPKMLocationByID,
+        getEvoChainByID,
+        getSpeciesByID,
         onClickLoadMore,
         getGlobalPokemons,
         // Loader

@@ -1,0 +1,13 @@
+.container-evo{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.evo-pokemon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
