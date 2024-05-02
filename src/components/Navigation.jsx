@@ -3,6 +3,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { PokemonContext } from "../context/PokemonContext";
 import { SearchLoader } from "./SearchLoader";
 import { Sidebar } from "./Sidebar";
+import logo from "../assets/pkdx_logo.png"
 
 export const Navigation = () => {
   const username = localStorage.getItem("username");
@@ -32,7 +33,7 @@ export const Navigation = () => {
         <Sidebar />
         <Link to="/" className="pokedex">
           <img
-            src="https://archives.bulbagarden.net/media/upload/4/4b/Pok%C3%A9dex_logo.png"
+            src={logo}
             alt="Logo Pokedex"
           />
         </Link>
@@ -46,7 +47,7 @@ export const Navigation = () => {
               onChange={onInputChange}
               placeholder="Search by PKM Name"
             />
-            <button className="btn-search">Buscar</button>
+            <button className="btn-search">Search</button>
           </form>
         </div>
         {!username && <Link to="/login" className="login">Login</Link>}

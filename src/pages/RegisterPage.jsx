@@ -5,6 +5,29 @@ import "./Register.css";
 
 export const RegisterPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [team, setTeam] = useState([]);
+
+  const createPokemonTeam = async (username, team) => {
+    try {
+      const response = await fetch("http://localhost:5000/team", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000",
+        },
+        body: JSON.stringify({ username, team }),
+      });
+  
+      if (response.ok) {
+        console.log("Team created successfully");
+      } else {
+        console.error("Failed to create team");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,6 +55,7 @@ export const RegisterPage = () => {
       if (response.ok) {
         // Registro exitoso, puedes redirigir al usuario u realizar otras acciones
         alert(data.message);
+        createPokemonTeam(username, team);
         window.location.href = "/login"; // Redirige al usuario a la página de inicio de sesión después del registro exitoso
       } else {
         setErrorMessage(data.message);
