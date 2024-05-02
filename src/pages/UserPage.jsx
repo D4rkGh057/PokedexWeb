@@ -12,12 +12,15 @@ export const UserPage = () => {
   const username = localStorage.getItem("username");
   const navigate = useNavigate();
 
+  const [team, setTeam] = useState([]);
   const [teams, setTeams] = useState([]);
+  const [historyTeams, setHistoryTeams] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [editablePokemon, setEditablePokemon] = useState({}); // Add this line to initialize the state with an empty object
   const [visible, setVisible] = useState(false); // Add this line to initialize the state with a boolean value [false
   const [editIndex, setEditIndex] = useState(0); // Add this line to initialize the state with a null value [null
+  const [viewhistorial, setViewHistorial] = useState(false);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value); // Update search term on input change
@@ -44,6 +47,28 @@ export const UserPage = () => {
       .join(" ");
   }
 
+  const createPokemonTeam = async (username, team) => {
+    try {
+      const response = await fetch("http://localhost:5000/team", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000",
+        },
+        body: JSON.stringify({ username, team }),
+      });
+
+      if (response.ok) {
+        console.log("Team created successfully");
+        cargarEquipo();
+      } else {
+        console.error("Failed to create team");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const filterPokemon = () => {
     const filteredPokemon = allPokemons.find((pokemon) =>
       pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -60,7 +85,7 @@ export const UserPage = () => {
     }
   };
 
-  const cargarEquipos = () => {
+  const cargarEquipo = () => {
     fetch(`http://localhost:5000/team?username=${username}`, {
       method: "GET",
       headers: {
@@ -78,6 +103,32 @@ export const UserPage = () => {
       .then((data) => {
         // Guarda los datos en el estado
         setTeams(data.teams); // Asegúrate de que estás accediendo a la propiedad correcta del objeto de respuesta
+        setIsLoading(false); // Actualiza el estado de carga después de recibir los datos
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setIsLoading(false); // Actualiza el estado de carga en caso de que ocurra un error
+      });
+  };
+
+  const cargarEquipos = () => {
+    fetch(`http://localhost:5000/team/all?username=${username}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:3000",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Error on request");
+        }
+      })
+      .then((data) => {
+        // Guarda los datos en el estado
+        setHistoryTeams(data.teams); // Asegúrate de que estás accediendo a la propiedad correcta del objeto de respuesta
         setIsLoading(false); // Actualiza el estado de carga después de recibir los datos
       })
       .catch((error) => {
@@ -150,7 +201,7 @@ export const UserPage = () => {
       });
 
       if (response.ok) {
-        cargarEquipos();
+        cargarEquipo();
         setVisible(false);
       }
     } catch (error) {
@@ -170,7 +221,7 @@ export const UserPage = () => {
       });
 
       if (response.ok) {
-        cargarEquipos();
+        cargarEquipo();
         setVisible(false);
       } else {
         console.error("Failed to delete Pokemon from team");
@@ -195,6 +246,7 @@ export const UserPage = () => {
   }
 
   useEffect(() => {
+    cargarEquipo();
     cargarEquipos();
   }, []);
 
@@ -228,7 +280,50 @@ export const UserPage = () => {
           </li>
           <li>Click the 'Remove' button to remove the selected Pokémon.</li>
         </ol>
-        
+
+        <div className="team-options">
+          <h3>Team Options</h3>
+          <ul>
+            <li>To add a new team click on add team</li>
+            <li>
+              To see your previous teams, click on 'History Teams,' and to hide
+              it, click again.
+            </li>
+          </ul>
+          <button onClick={() => createPokemonTeam(username, team)}>
+            Add Team
+          </button>
+          <button onClick={() => setViewHistorial(!viewhistorial)}>
+            History Teams
+          </button>
+        </div>
+        {viewhistorial && (
+          <>
+            <h3>Previous Teams</h3>
+            {historyTeams.map((team, index) => (
+              <div key={index}>
+                <h2>Team Pokemon {index + 1}</h2>
+                <div className="team-historial">
+                  {team.pokemons.map((pokemon, index) => (
+                    <div className="history-pkm">
+                      <span key={index}>
+                        <strong>
+                          {pokemon.name
+                            ? formatString(pokemon.name)
+                            : "No Pokemon"}
+                        </strong>
+                      </span>
+                      <img
+                        src={pokemon.image ? pokemon.image : imgholder}
+                        alt={pokemon.name}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
         {visible && (
           <>
             <div className="edit-pokemon">
