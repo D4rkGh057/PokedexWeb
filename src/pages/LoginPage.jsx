@@ -60,6 +60,7 @@ export const LoginPage = () => {
           type="text"
           id="username"
           name="username"
+          required
         />
 
         <label className="label-form" htmlFor="password">
@@ -70,6 +71,7 @@ export const LoginPage = () => {
           type="password"
           id="password"
           name="password"
+          required
         />
 
         <button type="submit">Login</button>

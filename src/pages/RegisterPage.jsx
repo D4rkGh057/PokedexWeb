@@ -78,6 +78,7 @@ export const RegisterPage = () => {
           type="text"
           id="username"
           name="username"
+          required
         />
 
         <label className="label-form" htmlFor="password">
@@ -88,6 +89,7 @@ export const RegisterPage = () => {
           type="password"
           id="password"
           name="password"
+          required
         />
         <label className="label-form" htmlFor="password-confirm">
           Confirm Password:
@@ -97,6 +99,7 @@ export const RegisterPage = () => {
           type="password"
           id="password-confirm"
           name="password-confirm"
+          required
         />
 
         <button type="submit">Sign Up</button>
