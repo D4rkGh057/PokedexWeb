@@ -49,13 +49,13 @@ export const PokemonPage = () => {
       .join(" ");
   }
 
-  console.log(species);
-
   useEffect(() => {
     fetchPokemon(id);
     fetchLocation(id);
-    fetchEvoChain(id);
-    fetchSpecies(id);
+    if (id < 3000) {
+      fetchEvoChain(id);
+      fetchSpecies(id);
+    }
   }, []);
 
   if (loading) {
@@ -166,24 +166,75 @@ export const PokemonPage = () => {
               </div>
             </div>
           </div>
-          <div className="container-evo">
-            <h1 className="titles">Evo Chain</h1>
-            {evoChain.chain &&
-              evoChain.chain.evolves_to.map((evolution) => (
-                <div key={evolution.species.name}>
-                  <div className="evo-pokemon">
-                    <h2>Next Evolution</h2>
-                    <h3>{formatString(evolution.species.name)}</h3>
-                    <img
-                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                        evolution.species.url.split("/")[6]
-                      }.png`}
-                      alt={formatString(evolution.species.name)}
-                    />
-                  </div>
-                </div>
-              ))}
-          </div>
+          <h1 className="titles">Evo Chain</h1>
+          {evoChain.chain ? (
+            <div className="container-evo">
+              {evoChain.chain &&
+                evoChain.chain.evolves_to.map((evolution) => (
+                  <React.Fragment key={evolution.species.name}>
+                    {evolution.species.name !== pokemon.name ? (
+                      <div className="evo-pokemon">
+                        <h2>Step 1</h2>
+                        <h3>{formatString(evolution.species.name)}</h3>
+                        <img
+                          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+                            evolution.species.url.split("/")[6]
+                          }.png`}
+                          alt={formatString(evolution.species.name)}
+                        />
+                      </div>
+                    ) : (
+                      species.evolves_from_species && (
+                        <div
+                          key={species.evolves_from_species.name}
+                          className="evo-pokemon"
+                        >
+                          <h2>Previous</h2>
+                          <h3>
+                            {formatString(species.evolves_from_species.name)}
+                          </h3>
+                          <img
+                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+                              species.evolves_from_species.url.split("/")[6]
+                            }.png`}
+                            alt={formatString(
+                              species.evolves_from_species.name
+                            )}
+                          />
+                        </div>
+                      )
+                    )}
+                    {evolution.evolves_to[0].species.name !== pokemon.name ? (
+                      <div
+                        key={`${evolution.species.name}-step2`}
+                        className="evo-pokemon"
+                      >
+                        <h2>Next</h2>
+                        <h3>
+                          {evolution.evolves_to.map((evoTo) => (
+                            <div key={evoTo.species.name}>
+                              {formatString(evoTo.species.name)}
+                            </div>
+                          ))}
+                        </h3>
+                        <img
+                          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+                            evolution.evolves_to[0].species.url.split("/")[6]
+                          }.png`}
+                          alt={formatString(
+                            evolution.evolves_to[0].species.name
+                          )}
+                        />
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                  </React.Fragment>
+                ))}
+            </div>
+          ) : (
+            <div></div>
+          )}
         </>
       )}
     </main>
