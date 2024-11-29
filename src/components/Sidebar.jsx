@@ -41,7 +41,9 @@ export const Sidebar = () => {
         <div className="sidebar-inner"></div>
         {username && (
           <div style={{ position: "absolute", bottom: 70 ,cursor:"pointer"}}>
-            <a onClick={closeSession}>Log Out</a>
+            <button onClick={closeSession} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer" }}>
+              Log Out
+            </button>
           </div>
         )}
       </div>

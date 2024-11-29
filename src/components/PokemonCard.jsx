@@ -34,7 +34,7 @@ export const PokemonCard = () => {
       />
       <div className="pokemon-types">
         {pokemonData.types.map((type, index) => (
-          <strong key={index}>
+          <strong key={type.slot}>
             <span className={getColorClass(type.type.name)}>
               {type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
             </span>

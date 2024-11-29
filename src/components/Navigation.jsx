@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { PokemonContext } from "../context/PokemonContext";
-import { SearchLoader } from "./SearchLoader";
 import { Sidebar } from "./Sidebar";
 import logo from "../assets/pkdx_logo.png"
 
@@ -12,7 +11,6 @@ export const Navigation = () => {
     valueSearch,
     onResetForm,
     getGlobalPokemons,
-    loading,
   } = useContext(PokemonContext);
 
   const navigate = useNavigate();
