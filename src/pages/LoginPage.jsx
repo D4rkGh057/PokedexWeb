@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [setErrorMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();

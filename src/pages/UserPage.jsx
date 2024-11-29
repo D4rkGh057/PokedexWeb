@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from "react";
+import { TbPencilCog } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import "./User.css";
-import { Loader } from "../components";
-import { TbPencilCog } from "react-icons/tb";
-import { PokemonContext } from "../context/PokemonContext";
 import imgholder from "../assets/pokeball.svg";
+import { Loader } from "../components";
+import { PokemonContext } from "../context/PokemonContext";
+import "./User.css";
 
 export const UserPage = () => {
   const { allPokemons } = useContext(PokemonContext);
   const username = localStorage.getItem("username");
   const navigate = useNavigate();
 
-  const [team, setTeam] = useState([]);
+  const [team] = useState([]);
   const [teams, setTeams] = useState([]);
   const [historyTeams, setHistoryTeams] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,7 @@ export const UserPage = () => {
   const [editablePokemon, setEditablePokemon] = useState({}); // Add this line to initialize the state with an empty object
   const [visible, setVisible] = useState(false); // Add this line to initialize the state with a boolean value [false
   const [editIndex, setEditIndex] = useState(0); // Add this line to initialize the state with a null value [null
-  const [viewhistorial, setViewHistorial] = useState(false);
+  const [setViewHistorial] = useState(false);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value); // Update search term on input change
@@ -36,7 +36,7 @@ export const UserPage = () => {
 
     setVisible(true);
     // Implement your search logic here using searchTerm
-    filterPokemon(searchTerm); // Assuming filterPokemon function takes searchTerm as input
+    filterPokemon(); // Call filterPokemon without arguments
   };
 
   function formatString(str) {
@@ -171,14 +171,6 @@ export const UserPage = () => {
       }
 
       // If the Pokémon doesn't exist, perform the insertion
-      const response = await fetch(`http://localhost:5000/pokemon`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3000",
-        },
-        body: JSON.stringify(editablePokemon), // Use editablePokemon for the new Pokémon data
-      });
     } catch (error) {
       console.error("Error:", error);
     }
@@ -231,23 +223,21 @@ export const UserPage = () => {
     }
   };
 
-  if (!username) {
-    Swal.fire({
-      title: "Error!",
-      text: "You must be logged in to access this page",
-      icon: "error",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/login");
-      }
-    });
-
-    return null; // Return null or a loading spinner while waiting for user confirmation
-  }
-
   useEffect(() => {
-    cargarEquipo();
-    cargarEquipos();
+    if (!username) {
+      Swal.fire({
+        title: "Error!",
+        text: "You must be logged in to access this page",
+        icon: "error",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+    } else {
+      cargarEquipo();
+      cargarEquipos();
+    }
   }, []);
 
   return (
@@ -301,12 +291,12 @@ export const UserPage = () => {
           <>
             <h3>Previous Teams</h3>
             {historyTeams.map((team, index) => (
-              <div key={index}>
+              <div key={team.id_equipo}>
                 <h2>Team Pokemon {index + 1}</h2>
                 <div className="team-historial">
                   {team.pokemons.map((pokemon, index) => (
-                    <div className="history-pkm">
-                      <span key={index}>
+                    <div className="history-pkm" key={pokemon.id}>
+                      <span>
                         <strong>
                           {pokemon.name
                             ? formatString(pokemon.name)
@@ -325,30 +315,28 @@ export const UserPage = () => {
           </>
         )}
         {visible && (
-          <>
-            <div className="edit-pokemon">
-              <h3>Pokemon</h3>
-              <form
-                className="search-form"
-                onSubmit={(event) => handleSearchSubmit(event)}
-              >
-                <input
-                  type="text"
-                  placeholder="Search Pokemon..."
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                />
-                <button type="submit"> Search</button>
-              </form>
-              <span>
-                {editablePokemon.name ? editablePokemon.name : "Pokemon Name"}
-              </span>
-              <img
-                src={editablePokemon.image ? editablePokemon.image : imgholder}
-                alt="Pokemon"
+          <div className="edit-pokemon">
+            <h3>Pokemon</h3>
+            <form
+              className="search-form"
+              onSubmit={(event) => handleSearchSubmit(event)}
+            >
+              <input
+                type="text"
+                placeholder="Search Pokemon..."
+                value={searchTerm}
+                onChange={handleSearchChange}
               />
-            </div>
-          </>
+              <button type="submit"> Search</button>
+            </form>
+            <span>
+              {editablePokemon.name ? editablePokemon.name : "Pokemon Name"}
+            </span>
+            <img
+              src={editablePokemon.image ? editablePokemon.image : imgholder}
+              alt="Pokemon"
+            />
+          </div>
         )}
       </div>
 
@@ -363,13 +351,13 @@ export const UserPage = () => {
       {teams.length > 0 && (
         <div className="pokemon-team-gallery">
           {teams.map((team, index) => (
-            <div className="pokemon-team-container" key={index}>
+            <div className="pokemon-team-container" key={team.id_equipo}>
               <div className="head-pokemon-team">
                 <h2 className="titles">Team Pokemon</h2>
               </div>
               <ul className="pokemon-team">
                 {team.pokemons.map((pokemon, index) => (
-                  <li className="pokemon" key={index}>
+                  <li className="pokemon" key={pokemon.id}>
                     <p style={{ fontWeight: 600 }}>
                       {pokemon.name ? formatString(pokemon.name) : "No Pokemon"}
                     </p>
@@ -378,17 +366,23 @@ export const UserPage = () => {
                       alt={pokemon.name}
                     />
                     {visible && (
-                      <span
-                        style={{ cursor: "pointer" }}
+                      <button
+                        style={{ cursor: "pointer", background: "none", border: "none" }}
                         onClick={() => handleEditPokemon(pokemon, index)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            handleEditPokemon(pokemon, index);
+                          }
+                        }}
+                        aria-label={`Edit ${pokemon.name}`}
                       >
                         <TbPencilCog />
-                      </span>
+                      </button>
                     )}
                   </li>
                 ))}
               </ul>
-              <div className="team-options" key={index}>
+              <div className="team-options" key={team.id_equipo}>
                 <p style={{ textAlign: "center" }}> Options</p>
                 <button
                   style={{ backgroundColor: "green", fontWeight: 600 }}

@@ -5,7 +5,7 @@ import "./Register.css";
 
 export const RegisterPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [team, setTeam] = useState([]);
+  const [team] = useState([]);
 
   const createPokemonTeam = async (username, team) => {
     try {

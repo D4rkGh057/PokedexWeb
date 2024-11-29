@@ -6,7 +6,7 @@ import { PokemonContext } from "../context/PokemonContext";
 export const SearchPage = () => {
   const location = useLocation();
 
-  const { globalPokemons, searchLoading } = useContext(PokemonContext);
+  const { globalPokemons } = useContext(PokemonContext);
 
   const filteredPokemons = globalPokemons.filter((pokemon) =>
     pokemon.name.includes(location.state.toLowerCase())

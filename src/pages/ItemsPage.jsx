@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { ItemsContext } from "../context/ItemsContext";
 import "./Items.css";
 import { Link } from "react-router-dom";
 
 export const ItemsPage = () => {
-  const { allItems, getAllItems, searchLoading, onClickLoadMore } =
+  const { allItems, searchLoading, onClickLoadMore } =
     useContext(ItemsContext);
 
   function formatString(str) {
@@ -29,8 +29,8 @@ export const ItemsPage = () => {
         <p>Loading...</p>
       ) : (
         allItems.map((item) => (
-          <Link to={`/item/${item.id}`} className="link-card">
-            <div key={`I${item.id}`} className="item-card">
+          <Link to={`/item/${item.id}`} className="link-card" key={`I${item.id}`}>
+            <div className="item-card">
               <h2>{formatString(item.name)}</h2>
               <img src={item.sprites.default} alt={item.name} />
               <p>{getEnglishFlavorText(item)}</p>

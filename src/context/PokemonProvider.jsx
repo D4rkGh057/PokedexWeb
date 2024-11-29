@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import { useForm } from "../hook/useForm";
 import { PokemonContext } from "./PokemonContext";
 
 export const PokemonProvider = ({ children }) => {
   const [allPokemons, setAllPokemons] = useState([]);
-  const [globalPokemons, setGlobalPokemons] = useState([]);
+  const [globalPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
 
   // Utilizar CustomHook - useForm
@@ -34,7 +35,10 @@ export const PokemonProvider = ({ children }) => {
     const results = await Promise.all(promises);
 
     setAllPokemons([...allPokemons, ...results]);
-    setLoading(false);
+  };
+  
+  PokemonProvider.propTypes = {
+    children: PropTypes.node.isRequired,
   };
 
   // Llamar todos los pokemones
@@ -50,20 +54,8 @@ export const PokemonProvider = ({ children }) => {
       );
       const data = await res.json();
 
-      const promises = data.results.map(async (pokemon) => {
-        const res = await fetch(pokemon.url);
-        const data = await res.json();
-        return data;
-      });
-      const results = await Promise.all(promises);
-
-      setGlobalPokemons((prevPokemons) => {
-        const newPokemons = results.filter(
-          (result) =>
-            !prevPokemons.some((pokemon) => pokemon.name === result.name)
-        );
-        return [...prevPokemons, ...newPokemons];
-      });
+      const results = await fetchPokemonDetails(data.results);
+      updateGlobalPokemons(results);
     }
 
     setSearchLoading(false);
@@ -140,7 +132,7 @@ export const PokemonProvider = ({ children }) => {
     shadow: false,
   });
 
-  const [filteredPokemons, setfilteredPokemons] = useState([]);
+  const [filteredPokemons] = useState([]);
 
   const handleCheckbox = (e) => {
     setTypeSelected({
@@ -162,32 +154,51 @@ export const PokemonProvider = ({ children }) => {
     }
   };
 
+  const providerValue = useMemo(() => ({
+    valueSearch,
+    onInputChange,
+    onResetForm,
+    allPokemons,
+    globalPokemons,
+    getPokemonByID,
+    getPKMLocationByID,
+    getEvoChainByID,
+    getSpeciesByID,
+    onClickLoadMore,
+    getGlobalPokemons,
+    // Loader
+    loading,
+    setLoading,
+    searchLoading,
+    // Btn Filter
+    active,
+    setActive,
+    // Filter Container Checkbox
+    handleCheckbox,
+    filteredPokemons,
+  }), [
+    valueSearch,
+    onInputChange,
+    onResetForm,
+    allPokemons,
+    globalPokemons,
+    getPokemonByID,
+    getPKMLocationByID,
+    getEvoChainByID,
+    getSpeciesByID,
+    onClickLoadMore,
+    getGlobalPokemons,
+    loading,
+    setLoading,
+    searchLoading,
+    active,
+    setActive,
+    handleCheckbox,
+    filteredPokemons,
+  ]);
+
   return (
-    <PokemonContext.Provider
-      value={{
-        valueSearch,
-        onInputChange,
-        onResetForm,
-        allPokemons,
-        globalPokemons,
-        getPokemonByID,
-        getPKMLocationByID,
-        getEvoChainByID,
-        getSpeciesByID,
-        onClickLoadMore,
-        getGlobalPokemons,
-        // Loader
-        loading,
-        setLoading,
-        searchLoading,
-        // Btn Filter
-        active,
-        setActive,
-        // Filter Container Checkbox
-        handleCheckbox,
-        filteredPokemons,
-      }}
-    >
+    <PokemonContext.Provider value={providerValue}>
       {children}
     </PokemonContext.Provider>
   );

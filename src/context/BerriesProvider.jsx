@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { BerriesContext } from "./BerriesContext";
 
 export const BerriesProvider = ({ children }) => {
@@ -10,6 +11,11 @@ export const BerriesProvider = ({ children }) => {
   const onClickLoadMore = () => {
     setOffset(offset + 35);
   };
+  
+  BerriesProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
 
   const getAllBerries = async (limit = 35) => {
     const baseURL = "https://pokeapi.co/api/v2/";
@@ -58,18 +64,18 @@ export const BerriesProvider = ({ children }) => {
     getAllBerries();
   }, [offset]);
 
+  const contextValue = useMemo(() => ({
+    allBerries,
+    globalBerries,
+    getAllBerries,
+    getGlobalBerries,
+    getBerriesByID,
+    searchLoading,
+    onClickLoadMore,
+  }), [allBerries, globalBerries, searchLoading, offset]);
+
   return (
-    <BerriesContext.Provider
-      value={{
-        allBerries,
-        globalBerries,
-        getAllBerries,
-        getGlobalBerries,
-        getBerriesByID,
-        searchLoading,
-        onClickLoadMore,
-      }}
-    >
+    <BerriesContext.Provider value={contextValue}>
       {children}
     </BerriesContext.Provider>
   );

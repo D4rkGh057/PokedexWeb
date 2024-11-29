@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { BerriesContext } from "../context/BerriesContext";
 import "./Berries.css";
 import { Link } from "react-router-dom";
@@ -23,14 +23,14 @@ export const BerriesPage = () => {
           <p>Loading...</p>
         ) : (
           allBerries.map((berry) => (
-            <Link to={`/berry/${berry.id}`} className="link-card">
-              <div key={berry.id} className="berrie-card">
+            <Link key={berry.id} to={`/berry/${berry.id}`} className="link-card">
+              <div className="berrie-card">
                 <h2>{formatString(berry.name)}</h2>
                 <img
                   src={`https://raw.githubusercontent.com/D4rkGh057/sprites_pokedex/main/Bayas/${berry.name}.png`}
                   alt={berry.name}
                 />
-                <p>{berry.effect_entries && berry.effect_entries[0]?.effect}</p>
+                <p>{berry.effect_entries?.[0]?.effect}</p>
               </div>
             </Link>
           ))
