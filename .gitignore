@@ -25,5 +25,6 @@ dist-ssr
 
 # SonarQube documents
 .sonar_lock
+.scannerwork
 report-task.txt
 
