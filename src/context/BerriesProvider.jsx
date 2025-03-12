@@ -11,11 +11,10 @@ export const BerriesProvider = ({ children }) => {
   const onClickLoadMore = () => {
     setOffset(offset + 35);
   };
-  
+
   BerriesProvider.propTypes = {
     children: PropTypes.node.isRequired,
   };
-
 
   const getAllBerries = async (limit = 35) => {
     const baseURL = "https://pokeapi.co/api/v2/";
@@ -23,6 +22,8 @@ export const BerriesProvider = ({ children }) => {
     const res = await fetch(`${baseURL}berry?limit=${limit}&offset=${offset}`);
     const data = await res.json();
 
+    //creamos un array de promesas
+    //recorremos el array de resultados de la API
     const promises = data.results.map(async (berry) => {
       const res = await fetch(berry.url);
       const data = await res.json();
@@ -64,15 +65,18 @@ export const BerriesProvider = ({ children }) => {
     getAllBerries();
   }, [offset]);
 
-  const contextValue = useMemo(() => ({
-    allBerries,
-    globalBerries,
-    getAllBerries,
-    getGlobalBerries,
-    getBerriesByID,
-    searchLoading,
-    onClickLoadMore,
-  }), [allBerries, globalBerries, searchLoading, offset]);
+  const contextValue = useMemo(
+    () => ({
+      allBerries,
+      globalBerries,
+      getAllBerries,
+      getGlobalBerries,
+      getBerriesByID,
+      searchLoading,
+      onClickLoadMore,
+    }),
+    [allBerries, globalBerries, searchLoading, offset]
+  );
 
   return (
     <BerriesContext.Provider value={contextValue}>
