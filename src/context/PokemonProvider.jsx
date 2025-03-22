@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
-import PropTypes from 'prop-types';
+import { useEffect,useMemo, useState } from "react";
 import { useForm } from "../hook/useForm";
 import { PokemonContext } from "./PokemonContext";
 
 export const PokemonProvider = ({ children }) => {
   const [allPokemons, setAllPokemons] = useState([]);
-  const [globalPokemons] = useState([]);
+  const [globalPokemons, setGlobalPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
 
   // Utilizar CustomHook - useForm
@@ -35,10 +34,7 @@ export const PokemonProvider = ({ children }) => {
     const results = await Promise.all(promises);
 
     setAllPokemons([...allPokemons, ...results]);
-  };
-  
-  PokemonProvider.propTypes = {
-    children: PropTypes.node.isRequired,
+    setLoading(false);
   };
 
   // Llamar todos los pokemones
@@ -54,8 +50,20 @@ export const PokemonProvider = ({ children }) => {
       );
       const data = await res.json();
 
-      const results = await fetchPokemonDetails(data.results);
-      updateGlobalPokemons(results);
+      const promises = data.results.map(async (pokemon) => {
+        const res = await fetch(pokemon.url);
+        const data = await res.json();
+        return data;
+      });
+      const results = await Promise.all(promises);
+
+      setGlobalPokemons((prevPokemons) => {
+        const newPokemons = results.filter(
+          (result) =>
+            !prevPokemons.some((pokemon) => pokemon.name === result.name)
+        );
+        return [...prevPokemons, ...newPokemons];
+      });
     }
 
     setSearchLoading(false);
@@ -132,7 +140,7 @@ export const PokemonProvider = ({ children }) => {
     shadow: false,
   });
 
-  const [filteredPokemons] = useState([]);
+  const [filteredPokemons, setfilteredPokemons] = useState([]);
 
   const handleCheckbox = (e) => {
     setTypeSelected({
