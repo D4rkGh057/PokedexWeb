@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { ItemsContext } from "./ItemsContext";
 
-import PropTypes from "prop-types";
-
 export const ItemsProvider = ({ children }) => {
   const [allItems, setAllItems] = useState([]);
   const [globalItems, setGlobalItems] = useState([]);
@@ -11,10 +9,6 @@ export const ItemsProvider = ({ children }) => {
 
   const onClickLoadMore = () => {
     setOffset(offset + 30);
-  };
-
-  ItemsProvider.propTypes = {
-    children: PropTypes.node.isRequired,
   };
 
   const getAllItems = async (limit = 30) => {
@@ -64,18 +58,18 @@ export const ItemsProvider = ({ children }) => {
     getAllItems();
   }, [offset]);
 
-  const value = useMemo(() => ({
-    allItems,
-    globalItems,
-    getAllItems,
-    getGlobalItems,
-    getItemsByID,
-    searchLoading,
-    onClickLoadMore,
-  }), [allItems, globalItems, searchLoading, offset]);
-
   return (
-    <ItemsContext.Provider value={value}>
+    <ItemsContext.Provider
+      value={{
+        allItems,
+        globalItems,
+        getAllItems,
+        getGlobalItems,
+        getItemsByID,
+        searchLoading,
+        onClickLoadMore,
+      }}
+    >
       {children}
     </ItemsContext.Provider>
   );
